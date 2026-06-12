@@ -372,7 +372,7 @@ if menu == "Beranda":
     st.markdown(
         """
         <div class="card">
-            <h3>1) Bobot molekul (Mr / massa molar)</h3>
+            <h3>1) Bobot molekul (Mr / molar)</h3>
             <p>
             <b>Mr</b> adalah jumlah massa atom relatif dari semua atom penyusun dalam satu rumus kimia.
             Satuan umumnya <b>g/mol</b> (sering juga disebut massa molar).
@@ -386,7 +386,7 @@ if menu == "Beranda":
             </p>
         </div>
         <div class="card" style="margin-top:.9rem">
-            <h3>2) Bobot ekuivalen (Be)</h3>
+            <h3>2) Bobot ekuivalen (BE)</h3>
             <p>
             <b>Berat ekuivalen</b> menyatakan “massa per 1 ekuivalen” dan dipakai pada perhitungan stoikiometri berbasis
             konsep ekuivalen (misalnya reaksi asam-basa atau redoks). Nilai ini bergantung pada <b>n</b> yaitu bilangan
@@ -394,7 +394,7 @@ if menu == "Beranda":
             </p>
             <p>
             <b>Rumus:</b><br>
-            \( B_e = \frac{M_r}{n} \)
+            \( BE = \ Mr/n \)
             </p>
             <p>
             <i>Catatan:</i> Untuk reaksi yang berbeda, nilai <b>n</b> bisa berbeda sesuai konteks (misalnya jumlah elektron
