@@ -386,19 +386,23 @@ if menu == "Beranda":
             </p>
         </div>
         <div class="card" style="margin-top:.9rem">
-            <h3>2) Bobot ekuivalen (BE)</h3>
+            <h3>2) Bobot ekuivalen (Be)</h3>
             <p>
-            <b>Berat ekuivalen</b> menyatakan “massa per 1 ekuivalen” dan dipakai pada perhitungan stoikiometri berbasis
-            konsep ekuivalen (misalnya reaksi asam-basa atau redoks). Nilai ini bergantung pada <b>n</b> yaitu bilangan
-            ekuivalen (sering terkait valensi/jumlah elektron yang terlibat).
+            <b>Berat/bobot ekuivalen</b> menyatakan “massa per 1 ekuivalen”.
+            Dalam aplikasi ini, nilainya dihitung berdasarkan input <b>n</b> (valensi ekuivalen / faktor ekuivalen).
             </p>
             <p>
             <b>Rumus:</b><br>
-            ( BE =  Mr/Valensi )
+            <b>Be = Mr / n</b><br>
+            Dengan:
+            • <b>Mr</b> (g/mol) = bobot molekul (massa molar)<br>
+            • <b>n</b> = jumlah ekuivalen (valensi ekuivalen / faktor ekuivalen)
             </p>
             <p>
-            <i>Catatan:</i> Untuk reaksi yang berbeda, nilai <b>n</b> bisa berbeda sesuai konteks (misalnya jumlah elektron
-            pada redoks atau jumlah proton yang terlibat pada asam-basa).
+            <b>Satuan:</b> Be dinyatakan dalam <b>g/grek</b> (gram per gram-ekuivalen).
+            </p>
+            <p>
+            <i>Catatan:</i> Untuk reaksi yang berbeda, nilai <b>n</b> dapat berbeda sesuai konteks.
             </p>
         </div>
         """,
@@ -417,6 +421,14 @@ if menu == "Beranda":
     )
     st.markdown("---")
     st.caption("Tip: gunakan menu di sidebar untuk berpindah halaman.")
+    st.markdown(
+        """
+        <div style="text-align:center; color:#4a7a90; font-size:.9rem; margin-top:1.2rem;">
+            <b>Author:</b> BAKPHIA Team
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 elif menu == "Kalkulator":
     formula = st.text_input(
