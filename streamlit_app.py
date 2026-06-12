@@ -371,6 +371,114 @@ if menu == "Beranda":
 
     st.markdown(
         """
+        <style>
+        .element-kartu-wrap{margin-top: .75rem; margin-bottom: .9rem;}
+        .element-grid{
+            display:grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+        @media (max-width: 900px){
+            .element-grid{grid-template-columns: repeat(2, minmax(0, 1fr));}
+        }
+        @media (max-width: 560px){
+            .element-grid{grid-template-columns: repeat(1, minmax(0, 1fr));}
+        }
+        .element-card{
+            border-radius: 16px;
+            padding: 14px 14px;
+            border: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 6px 24px rgba(15,32,39,0.08);
+            position: relative;
+            overflow: hidden;
+            min-height: 130px;
+        }
+        .element-card:before{
+            content:"";
+            position:absolute;
+            inset:-2px;
+            background: radial-gradient(circle at 20% 10%, rgba(255,255,255,0.55), rgba(255,255,255,0) 45%);
+            pointer-events:none;
+        }
+        .element-symbol{
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 900;
+            font-size: 2.1rem;
+            letter-spacing: 0.02em;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .element-row{
+            font-size: .92rem;
+            line-height: 1.4;
+            color: rgba(15,32,39,0.95);
+            font-weight: 600;
+        }
+        .element-meta{
+            margin-top: 8px;
+            font-size: .78rem;
+            opacity: .95;
+        }
+        .element-badge{
+            display:inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.55);
+            border: 1px solid rgba(0,0,0,0.08);
+            font-weight: 700;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    # Kartu unsur (default sesuai request: tampilkan Cu)
+    default_elements = ["H", "O", "C", "Na", "Cl", "Cu"]
+    # Mapping warna blok (agar serasi dengan halaman Tabel Periodik)
+    block_color = {
+        "s": "#E3F2FD",
+        "p": "#E8F5E9",
+        "d": "#FFF3E0",
+        "f": "#F3E5F5",
+    }
+
+    def label_blok(block: str) -> str:
+        return {
+            "s": "Blok s",
+            "p": "Blok p",
+            "d": "Blok d",
+            "f": "Blok f",
+        }.get(block, f"Blok {block}")
+
+    cards_html = ""
+    for sym in default_elements:
+        if sym in PERIODIC_META and sym in ATOMIC_MASS:
+            _p, _g, blk = PERIODIC_META[sym]
+            color = block_color.get(blk, "#FFFFFF")
+            mr = ATOMIC_MASS[sym]
+            cards_html += f"""
+                <div class="element-card" style="background:{color};">
+                    <div class="element-symbol">{sym}</div>
+                    <div class="element-row">Mr unsur: {mr:.3f} g/mol</div>
+                    <div class="element-meta">
+                        <span class="element-badge">{label_blok(blk)}</span>
+                    </div>
+                </div>
+            """
+
+    st.markdown(
+        f"""
+        <div class="element-kartu-wrap">
+            <div class="element-grid">
+                {cards_html}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        """
         <div class="card">
             <h3>1) Bobot molekul (Mr / molar)</h3>
             <p>
