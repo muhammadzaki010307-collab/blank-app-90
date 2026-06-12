@@ -394,7 +394,7 @@ if menu == "Beranda":
             </p>
             <p>
             <b>Rumus:</b><br>
-            \( BE = \ Mr/n \)
+            ( BE =  Mr/Valensi )
             </p>
             <p>
             <i>Catatan:</i> Untuk reaksi yang berbeda, nilai <b>n</b> bisa berbeda sesuai konteks (misalnya jumlah elektron
