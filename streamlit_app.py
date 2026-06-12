@@ -725,9 +725,10 @@ elif menu == "Kalkulator":
           </div>
           <div class="bb-card" style="min-width:240px; padding:14px 14px;">
             <div style="font-weight:1000;">🧠 Tips cepat</div>
-            <div style="margin-top:6px; font-size:.95rem; line-height:1.5; color: rgba(255,255,255,.78);">
+            <div style="margin-top:6px; font-size:.95rem; line-height:1.5; color: var(--muted);">
               Pakai tanda kurung <b>( )</b> untuk pengali.<br/>
-              Dot hydrate: <b>CuSO4·5H2O</b> (boleh pakai titik tengah/· atau titik biasa).
+              Dot hydrate: <b>CuSO4·5H2O</b> (boleh pakai titik tengah/· atau titik biasa).<br/>
+              Input <b>n</b> harus bilangan bulat > 0 agar <b>Be = Mr / n</b> bisa dihitung.
             </div>
           </div>
         </div>
