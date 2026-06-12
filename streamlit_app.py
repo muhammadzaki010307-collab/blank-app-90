@@ -354,34 +354,39 @@ st.markdown(
     """
     <style>
     :root{
-      --bg0:#070A12;
-      --bg1:#0B1222;
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.08);
-      --border: rgba(255,255,255,.10);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.70);
-      --brand1:#7C3AED; /* violet */
-      --brand2:#22C55E; /* green  */
-      --brand3:#38BDF8; /* sky    */
-      --shadow: 0 14px 50px rgba(0,0,0,.35);
+      /* Light-friendly theme (kontras bagus di laptop layar putih) */
+      --bg0:#F7F8FF;
+      --bg1:#FFFFFF;
+
+      --card: rgba(255,255,255,.88);
+      --card2: rgba(255,255,255,.98);
+      --border: rgba(17,24,39,.12);
+
+      --text: rgba(15, 23, 42, .92);     /* slate-900 */
+      --muted: rgba(15, 23, 42, .62);    /* slate-700 */
+
+      --brand1:#6D28D9; /* violet  */
+      --brand2:#16A34A; /* green    */
+      --brand3:#0284C7; /* sky      */
+
+      --shadow: 0 14px 50px rgba(2, 6, 23, .12);
       --radius: 18px;
     }
 
     /* Background */
     .stApp{
-      background: radial-gradient(1200px 600px at 20% -10%, rgba(124,58,237,.35), transparent 55%),
-                  radial-gradient(900px 480px at 90% 10%, rgba(56,189,248,.30), transparent 55%),
-                  radial-gradient(900px 580px at 20% 100%, rgba(34,197,94,.18), transparent 55%),
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(109,40,217,.18), transparent 55%),
+                  radial-gradient(900px 480px at 90% 10%, rgba(2,132,199,.14), transparent 55%),
+                  radial-gradient(900px 580px at 20% 100%, rgba(22,163,74,.10), transparent 55%),
                   linear-gradient(180deg, var(--bg0), var(--bg1));
       color: var(--text);
     }
 
     /* Streamlit widgets */
     div[data-testid="stSidebar"]{
-      background: rgba(10, 16, 32, .65) !important;
+      background: rgba(255,255,255,.80) !important;
       backdrop-filter: blur(10px);
-      border-right: 1px solid rgba(255,255,255,.08);
+      border-right: 1px solid rgba(17,24,39,.10);
     }
 
     /* Card helpers */
@@ -397,10 +402,10 @@ st.markdown(
       content:"";
       position:absolute;
       inset:-2px;
-      background: radial-gradient(circle at 20% 10%, rgba(255,255,255,.22), transparent 45%),
-                  radial-gradient(circle at 90% 20%, rgba(56,189,248,.22), transparent 40%);
+      background: radial-gradient(circle at 20% 10%, rgba(109,40,217,.22), transparent 45%),
+                  radial-gradient(circle at 90% 20%, rgba(2,132,199,.18), transparent 40%);
       pointer-events:none;
-      opacity:.7;
+      opacity:.9;
     }
 
     /* Hero */
@@ -411,15 +416,14 @@ st.markdown(
       justify-content:space-between;
       gap: 14px;
     }
-    .bb-hero-left{
-      flex: 1;
-    }
+    .bb-hero-left{ flex: 1; }
     .bb-hero-title{
       font-size: 2.15rem;
       line-height: 1.08;
       margin: 0;
       font-weight: 900;
       letter-spacing: -.02em;
+      color: var(--text);
     }
     .bb-hero-sub{
       color: var(--muted);
@@ -433,34 +437,35 @@ st.markdown(
       gap:8px;
       padding: 10px 12px;
       border-radius: 999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
+      border:1px solid rgba(17,24,39,.14);
+      background: rgba(255,255,255,.70);
       font-weight: 800;
-      color: rgba(255,255,255,.90);
+      color: rgba(15, 23, 42, .90);
       font-size:.92rem;
     }
     .bb-pill .dot{
       width:10px;height:10px;border-radius:50%;
       background: linear-gradient(180deg, var(--brand1), var(--brand3));
-      box-shadow: 0 0 0 4px rgba(124,58,237,.18);
+      box-shadow: 0 0 0 4px rgba(109,40,217,.12);
     }
 
     /* Buttons */
     button[kind="primary"]{
       background: linear-gradient(90deg, var(--brand1), var(--brand3)) !important;
-      border: 1px solid rgba(255,255,255,.16) !important;
+      border: 1px solid rgba(2, 132, 199,.20) !important;
+      color: #FFFFFF !important;
     }
 
     /* Inputs focus */
     div[data-baseweb="input"] input:focus,
     div[data-baseweb="textarea"] textarea:focus{
       outline: none !important;
-      box-shadow: 0 0 0 3px rgba(56,189,248,.25) !important;
-      border-color: rgba(56,189,248,.55) !important;
+      box-shadow: 0 0 0 3px rgba(2,132,199,.20) !important;
+      border-color: rgba(2,132,199,.55) !important;
     }
 
     /* Generic divider tint */
-    hr{ border-color: rgba(255,255,255,.12) !important; }
+    hr{ border-color: rgba(17,24,39,.14) !important; }
 
     /* Small captions */
     .bb-muted{ color: var(--muted); }
@@ -709,9 +714,37 @@ if menu == "Beranda":
     )
 
 elif menu == "Kalkulator":
+    st.markdown(
+        """
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:6px;">
+          <div class="bb-card" style="flex:1; min-width:320px;">
+            <div style="font-weight:1000; font-size:1.15rem;">🎛️  Kalkulator Bobot Molekul</div>
+            <div class="bb-muted" style="margin-top:6px;">
+              Masukkan rumus (mis. <b>H2O</b>, <b>CO2</b>, <b>Ca(OH)2</b>, <b>CuSO4·5H2O</b>). Lalu atur nilai <b>n</b> untuk dapat <b>Be</b>.
+            </div>
+          </div>
+          <div class="bb-card" style="min-width:240px; padding:14px 14px;">
+            <div style="font-weight:1000;">🧠 Tips cepat</div>
+            <div style="margin-top:6px; font-size:.95rem; line-height:1.5; color: rgba(255,255,255,.78);">
+              Pakai tanda kurung <b>( )</b> untuk pengali.<br/>
+              Dot hydrate: <b>CuSO4·5H2O</b> (boleh pakai titik tengah/· atau titik biasa).
+            </div>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    contoh = ["H2O", "CO2", "NaCl", "Ca(OH)2", "CH3COOH", "CuSO4·5H2O"]
+    c1, c2, c3, c4, c5, c6 = st.columns(6)
+    for idx, c in enumerate([c1, c2, c3, c4, c5, c6]):
+        if idx < len(contoh):
+            if c.button(f"⚗️ {contoh[idx]}"):
+                st.session_state["formula_prefill"] = contoh[idx]
+
     formula = st.text_input(
         "Rumus kimia",
-        value="Ca(OH)2",
+        value=st.session_state.get("formula_prefill", "Ca(OH)2"),
         help="Gunakan format huruf besar-kecil (mis. Na, Cl) dan angka untuk jumlah atom.",
     )
 
