@@ -350,8 +350,141 @@ def calculate_molar_mass(counts: dict[str, int]) -> float:
 # -------------------------
 st.set_page_config(page_title="Kalkulator Bobot Molekul", layout="wide")
 
-st.title("🧪 Kalkulator Bobot Molekul dan Bobot Ekuivalen (Mr) dari Rumus Kimia")
-st.caption("Masukkan rumus kimia seperti: H2O, CO2, NaCl, Ca(OH)2. Mendukung tanda kurung ().")
+st.markdown(
+    """
+    <style>
+    :root{
+      --bg0:#070A12;
+      --bg1:#0B1222;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.08);
+      --border: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --brand1:#7C3AED; /* violet */
+      --brand2:#22C55E; /* green  */
+      --brand3:#38BDF8; /* sky    */
+      --shadow: 0 14px 50px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+
+    /* Background */
+    .stApp{
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(124,58,237,.35), transparent 55%),
+                  radial-gradient(900px 480px at 90% 10%, rgba(56,189,248,.30), transparent 55%),
+                  radial-gradient(900px 580px at 20% 100%, rgba(34,197,94,.18), transparent 55%),
+                  linear-gradient(180deg, var(--bg0), var(--bg1));
+      color: var(--text);
+    }
+
+    /* Streamlit widgets */
+    div[data-testid="stSidebar"]{
+      background: rgba(10, 16, 32, .65) !important;
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(255,255,255,.08);
+    }
+
+    /* Card helpers */
+    .bb-card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 18px;
+      overflow: hidden;
+    }
+    .bb-card:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(circle at 20% 10%, rgba(255,255,255,.22), transparent 45%),
+                  radial-gradient(circle at 90% 20%, rgba(56,189,248,.22), transparent 40%);
+      pointer-events:none;
+      opacity:.7;
+    }
+
+    /* Hero */
+    .bb-hero{
+      padding: 18px 0 8px 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+    }
+    .bb-hero-left{
+      flex: 1;
+    }
+    .bb-hero-title{
+      font-size: 2.15rem;
+      line-height: 1.08;
+      margin: 0;
+      font-weight: 900;
+      letter-spacing: -.02em;
+    }
+    .bb-hero-sub{
+      color: var(--muted);
+      margin-top: 8px;
+      font-size: 1rem;
+    }
+    .bb-pillrow{ margin-top: 12px; display:flex; flex-wrap:wrap; gap:10px; }
+    .bb-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      font-weight: 800;
+      color: rgba(255,255,255,.90);
+      font-size:.92rem;
+    }
+    .bb-pill .dot{
+      width:10px;height:10px;border-radius:50%;
+      background: linear-gradient(180deg, var(--brand1), var(--brand3));
+      box-shadow: 0 0 0 4px rgba(124,58,237,.18);
+    }
+
+    /* Buttons */
+    button[kind="primary"]{
+      background: linear-gradient(90deg, var(--brand1), var(--brand3)) !important;
+      border: 1px solid rgba(255,255,255,.16) !important;
+    }
+
+    /* Inputs focus */
+    div[data-baseweb="input"] input:focus,
+    div[data-baseweb="textarea"] textarea:focus{
+      outline: none !important;
+      box-shadow: 0 0 0 3px rgba(56,189,248,.25) !important;
+      border-color: rgba(56,189,248,.55) !important;
+    }
+
+    /* Generic divider tint */
+    hr{ border-color: rgba(255,255,255,.12) !important; }
+
+    /* Small captions */
+    .bb-muted{ color: var(--muted); }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+# Spacer & Hero (HTML untuk konsisten dengan theme)
+st.markdown(
+    """
+    <div class="bb-hero">
+      <div class="bb-hero-left">
+        <div class="bb-hero-title">🧪 Kalkulator Bobot Molekul & Bobot Ekuivalen</div>
+        <div class="bb-hero-sub">Hitung <b>Mr</b> (massa molar) dan <b>Be</b> dari rumus kimia—cepat, rapi, dan edukatif.</div>
+        <div class="bb-pillrow">
+          <div class="bb-pill"><span class="dot"></span>Input: <b>H2O</b>, <b>CO2</b>, <b>NaCl</b>, <b>Ca(OH)2</b></div>
+          <div class="bb-pill"><span class="dot"></span>Support: <b>( )</b> & <b>dot hydrate</b> (contoh: CuSO4·5H2O)</div>
+        </div>
+      </div>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 # Sidebar menu (Beranda / Kalkulator / Tabel Periodik)
 menu = st.sidebar.radio(
@@ -367,7 +500,19 @@ if menu == "Beranda":
     )
     st.markdown("---")
 
-    st.markdown('<div class="section-header">Teori Singkat: Bobot Molekul & Bobot Ekuivalen</div>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:6px; margin-bottom:10px;">
+          <div style="font-size:1.1rem; font-weight:1000;">
+            🧠✨ Teori Singkat: Bobot Molekul & Bobot Ekuivalen
+          </div>
+          <div class="bb-muted" style="font-size:.95rem;">
+            Rumusnya tetap sama—tapi tampilannya lebih “kimia banget”.
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     st.markdown(
         """
@@ -494,39 +639,49 @@ if menu == "Beranda":
 
     st.markdown(
         """
-        <div class="card">
-            <h3>1) Bobot molekul (Mr / molar)</h3>
-            <p>
-            <b>Mr</b> adalah jumlah massa atom relatif dari semua atom penyusun dalam satu rumus kimia.
-            Satuan umumnya <b>g/mol</b> (sering juga disebut massa molar).
-            </p>
-            <p>
-            <b>Rumus:</b><br>
-            M<sub>r</sub> = ∑ (m<sub>a</sub> × n<sub>a</sub>)<br>
-            Keterangan:<br>
-            • m<sub>a</sub> = massa atom relatif (dari tabel periodik) <br>
-            • n<sub>a</sub> = jumlah atom unsur ke-a dalam rumus
-            </p>
-        </div>
-        <div class="card" style="margin-top:.9rem">
-            <h3>2) Bobot ekuivalen (Be)</h3>
-            <p>
-            <b>Berat/bobot ekuivalen</b> menyatakan “massa per 1 ekuivalen”.
-            Dalam aplikasi ini, nilainya dihitung berdasarkan input <b>n</b> (valensi ekuivalen / faktor ekuivalen).
-            </p>
-            <p>
-            <b>Rumus:</b><br>
-            Be = Mr / n<br>
-            Dengan:
-            • <b>Mr</b> (g/mol) = bobot molekul (massa molar)<br>
-            • <b>n</b> = jumlah ekuivalen (valensi ekuivalen / faktor ekuivalen)
-            </p>
-            <p>
-            <b>Satuan:</b> Be dinyatakan dalam <b>g/grek</b> (gram per gram-ekuivalen).
-            </p>
-            <p>
-            <i>Catatan:</i> Untuk reaksi yang berbeda, nilai <b>n</b> dapat berbeda sesuai konteks.
-            </p>
+        <div style="display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 10px;">
+          <div class="bb-card">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+              <div style="font-weight:1000; font-size:1.1rem;">🧪 1) Bobot molekul <span style="opacity:.9;">(Mr)</span></div>
+              <div style="padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); font-weight:900;">
+                g/mol
+              </div>
+            </div>
+            <div style="margin-top:10px; color: rgba(255,255,255,.78); line-height:1.5;">
+              <b>Mr</b> = jumlah massa atom relatif dari semua atom penyusun dalam satu rumus kimia.
+            </div>
+            <div style="margin-top:12px; padding:12px 14px; border-radius:14px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.04);">
+              <div style="font-weight:900; margin-bottom:6px;">Rumus</div>
+              M<sub>r</sub> = ∑ (m<sub>a</sub> × n<sub>a</sub>)
+              <div style="margin-top:6px; font-size:.92rem; color: rgba(255,255,255,.78);">
+                • m<sub>a</sub> = massa atom relatif <br/>
+                • n<sub>a</sub> = jumlah atom unsur
+              </div>
+            </div>
+          </div>
+
+          <div class="bb-card">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+              <div style="font-weight:1000; font-size:1.1rem;">⚖️ 2) Bobot ekuivalen <span style="opacity:.9;">(Be)</span></div>
+              <div style="padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); font-weight:900;">
+                g/grek
+              </div>
+            </div>
+            <div style="margin-top:10px; color: rgba(255,255,255,.78); line-height:1.5;">
+              <b>Be</b> = massa per 1 ekuivalen, dihitung dari input <b>n</b> (valensi/faktor ekuivalen).
+            </div>
+            <div style="margin-top:12px; padding:12px 14px; border-radius:14px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.04);">
+              <div style="font-weight:900; margin-bottom:6px;">Rumus</div>
+              Be = Mr / n
+              <div style="margin-top:6px; font-size:.92rem; color: rgba(255,255,255,.78);">
+                • Mr (g/mol) = bobot molekul <br/>
+                • n = jumlah ekuivalen
+              </div>
+            </div>
+            <div style="margin-top:10px; font-size:.92rem; color: rgba(255,255,255,.72);">
+              <i>Catatan:</i> nilai <b>n</b> bisa berbeda tergantung konteks reaksi.
+            </div>
+          </div>
         </div>
         """,
         unsafe_allow_html=True,
