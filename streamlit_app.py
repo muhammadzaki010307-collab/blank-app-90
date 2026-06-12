@@ -648,17 +648,17 @@ if menu == "Beranda":
           <div class="bb-card">
             <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
               <div style="font-weight:1000; font-size:1.1rem;">🧪 1) Bobot molekul <span style="opacity:.9;">(Mr)</span></div>
-              <div style="padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); font-weight:900;">
+              <div style="padding:8px 12px; border-radius:999px; border:1px solid rgba(17,24,39,.14); background:rgba(17,24,39,.04); font-weight:900; color: var(--text);">
                 g/mol
               </div>
             </div>
-            <div style="margin-top:10px; color: rgba(255,255,255,.78); line-height:1.5;">
-              <b>Mr</b> = jumlah massa atom relatif dari semua atom penyusun dalam satu rumus kimia.
+            <div style="margin-top:10px; color: var(--muted); line-height:1.5;">
+              <b style="color: var(--text);">Mr</b> = jumlah massa atom relatif dari semua atom penyusun dalam satu rumus kimia.
             </div>
-            <div style="margin-top:12px; padding:12px 14px; border-radius:14px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.04);">
-              <div style="font-weight:900; margin-bottom:6px;">Rumus</div>
+            <div style="margin-top:12px; padding:12px 14px; border-radius:14px; border:1px solid rgba(17,24,39,.10); background: rgba(17,24,39,.03);">
+              <div style="font-weight:900; margin-bottom:6px; color: var(--text);">Rumus</div>
               M<sub>r</sub> = ∑ (m<sub>a</sub> × n<sub>a</sub>)
-              <div style="margin-top:6px; font-size:.92rem; color: rgba(255,255,255,.78);">
+              <div style="margin-top:6px; font-size:.92rem; color: var(--muted);">
                 • m<sub>a</sub> = massa atom relatif <br/>
                 • n<sub>a</sub> = jumlah atom unsur
               </div>
@@ -668,22 +668,22 @@ if menu == "Beranda":
           <div class="bb-card">
             <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
               <div style="font-weight:1000; font-size:1.1rem;">⚖️ 2) Bobot ekuivalen <span style="opacity:.9;">(Be)</span></div>
-              <div style="padding:8px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); font-weight:900;">
+              <div style="padding:8px 12px; border-radius:999px; border:1px solid rgba(17,24,39,.14); background:rgba(17,24,39,.04); font-weight:900; color: var(--text);">
                 g/grek
               </div>
             </div>
-            <div style="margin-top:10px; color: rgba(255,255,255,.78); line-height:1.5;">
-              <b>Be</b> = massa per 1 ekuivalen, dihitung dari input <b>n</b> (valensi/faktor ekuivalen).
+            <div style="margin-top:10px; color: var(--muted); line-height:1.5;">
+              <b style="color: var(--text);">Be</b> = massa per 1 ekuivalen, dihitung dari input <b>n</b> (valensi/faktor ekuivalen).
             </div>
-            <div style="margin-top:12px; padding:12px 14px; border-radius:14px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.04);">
-              <div style="font-weight:900; margin-bottom:6px;">Rumus</div>
+            <div style="margin-top:12px; padding:12px 14px; border-radius:14px; border:1px solid rgba(17,24,39,.10); background: rgba(17,24,39,.03);">
+              <div style="font-weight:900; margin-bottom:6px; color: var(--text);">Rumus</div>
               Be = Mr / n
-              <div style="margin-top:6px; font-size:.92rem; color: rgba(255,255,255,.78);">
+              <div style="margin-top:6px; font-size:.92rem; color: var(--muted);">
                 • Mr (g/mol) = bobot molekul <br/>
                 • n = jumlah ekuivalen
               </div>
             </div>
-            <div style="margin-top:10px; font-size:.92rem; color: rgba(255,255,255,.72);">
+            <div style="margin-top:10px; font-size:.92rem; color: rgba(15,23,42,.72);">
               <i>Catatan:</i> nilai <b>n</b> bisa berbeda tergantung konteks reaksi.
             </div>
           </div>
