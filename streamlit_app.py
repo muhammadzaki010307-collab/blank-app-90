@@ -386,12 +386,15 @@ if menu == "Beranda":
         }
         .element-card{
             border-radius: 16px;
-            padding: 14px 14px;
+            padding: 18px 16px;
             border: 1px solid rgba(0,0,0,0.06);
             box-shadow: 0 6px 24px rgba(15,32,39,0.08);
             position: relative;
             overflow: hidden;
-            min-height: 130px;
+            min-height: 150px;
+            display:flex;
+            flex-direction:column;
+            justify-content:space-between;
         }
         .element-card:before{
             content:"";
@@ -403,38 +406,43 @@ if menu == "Beranda":
         .element-symbol{
             font-family: 'DM Sans', sans-serif;
             font-weight: 900;
-            font-size: 2.1rem;
+            font-size: 2.25rem;
             letter-spacing: 0.02em;
             line-height: 1;
             margin-bottom: 8px;
+            position:relative;
+            z-index:1;
         }
         .element-row{
-            font-size: .92rem;
-            line-height: 1.4;
+            position:relative;
+            z-index:1;
+            font-size: .95rem;
+            line-height: 1.45;
             color: rgba(15,32,39,0.95);
-            font-weight: 600;
+            font-weight: 650;
         }
         .element-meta{
-            margin-top: 8px;
-            font-size: .78rem;
-            opacity: .95;
+            position:relative;
+            z-index:1;
+            margin-top: 10px;
+            font-size: .82rem;
+            opacity: .98;
         }
         .element-badge{
             display:inline-block;
-            padding: 6px 10px;
+            padding: 7px 12px;
             border-radius: 999px;
-            background: rgba(255,255,255,0.55);
+            background: rgba(255,255,255,0.6);
             border: 1px solid rgba(0,0,0,0.08);
-            font-weight: 700;
+            font-weight: 800;
         }
         </style>
         """,
         unsafe_allow_html=True,
     )
 
-    # Kartu unsur (default sesuai request: tampilkan Cu)
     default_elements = ["H", "O", "C", "Na", "Cl", "Cu"]
-    # Mapping warna blok (agar serasi dengan halaman Tabel Periodik)
+
     block_color = {
         "s": "#E3F2FD",
         "p": "#E8F5E9",
@@ -450,21 +458,28 @@ if menu == "Beranda":
             "f": "Blok f",
         }.get(block, f"Blok {block}")
 
-    cards_html = ""
+    # Pastikan kartu dirender sebagai HTML murni tanpa f-string entity yang rawan.
+    cards_html_parts: list[str] = []
     for sym in default_elements:
         if sym in PERIODIC_META and sym in ATOMIC_MASS:
             _p, _g, blk = PERIODIC_META[sym]
             color = block_color.get(blk, "#FFFFFF")
             mr = ATOMIC_MASS[sym]
-            cards_html += f"""
+            cards_html_parts.append(
+                f"""
                 <div class="element-card" style="background:{color};">
-                    <div class="element-symbol">{sym}</div>
-                    <div class="element-row">Mr unsur: {mr:.3f} g/mol</div>
+                    <div>
+                        <div class="element-symbol">{sym}</div>
+                        <div class="element-row">Mr unsur: {mr:.3f} g/mol</div>
+                    </div>
                     <div class="element-meta">
                         <span class="element-badge">{label_blok(blk)}</span>
                     </div>
                 </div>
-            """
+                """.strip()
+            )
+
+    cards_html = "\n".join(cards_html_parts)
 
     st.markdown(
         f"""
@@ -487,7 +502,7 @@ if menu == "Beranda":
             </p>
             <p>
             <b>Rumus:</b><br>
-            M<sub>r</sub> = &sum; (m<sub>a</sub> &times; n<sub>a</sub>)<br>
+            M<sub>r</sub> = ∑ (m<sub>a</sub> × n<sub>a</sub>)<br>
             Keterangan:<br>
             • m<sub>a</sub> = massa atom relatif (dari tabel periodik) <br>
             • n<sub>a</sub> = jumlah atom unsur ke-a dalam rumus
@@ -501,7 +516,7 @@ if menu == "Beranda":
             </p>
             <p>
             <b>Rumus:</b><br>
-            <b>Be = Mr / n</b><br>
+            Be = Mr / n<br>
             Dengan:
             • <b>Mr</b> (g/mol) = bobot molekul (massa molar)<br>
             • <b>n</b> = jumlah ekuivalen (valensi ekuivalen / faktor ekuivalen)
