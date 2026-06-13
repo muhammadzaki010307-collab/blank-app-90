@@ -375,11 +375,26 @@ st.markdown(
 
     /* Background */
     .stApp{
-      background: radial-gradient(1200px 600px at 20% -10%, rgba(109,40,217,.18), transparent 55%),
-                  radial-gradient(900px 480px at 90% 10%, rgba(2,132,199,.14), transparent 55%),
-                  radial-gradient(900px 580px at 20% 100%, rgba(22,163,74,.10), transparent 55%),
-                  linear-gradient(180deg, var(--bg0), var(--bg1));
+      /* Base gradient */
+      background:
+        /* 1) Atom dots (pattern repeat) */
+        radial-gradient(circle at 12px 12px, rgba(2,132,199,.18) 0 2px, rgba(2,132,199,0) 3px) 0 0 / 28px 28px,
+        radial-gradient(circle at 20px 4px, rgba(109,40,217,.15) 0 1.5px, rgba(109,40,217,0) 3px) 0 0 / 36px 36px,
+
+        /* 2) Mesh/structure lines (tipis) */
+        linear-gradient(rgba(2,132,199,.09) 1px, transparent 1px) 0 0 / 40px 40px,
+        linear-gradient(90deg, rgba(109,40,217,.07) 1px, transparent 1px) 0 0 / 40px 40px,
+
+        /* 3) Glow blobs */
+        radial-gradient(1200px 600px at 20% -10%, rgba(109,40,217,.18), transparent 55%),
+        radial-gradient(900px 480px at 90% 10%, rgba(2,132,199,.14), transparent 55%),
+        radial-gradient(900px 580px at 20% 100%, rgba(22,163,74,.10), transparent 55%),
+
+        /* 4) Fallback base */
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+
       color: var(--text);
+      background-attachment: fixed;
     }
 
     /* Streamlit widgets */
