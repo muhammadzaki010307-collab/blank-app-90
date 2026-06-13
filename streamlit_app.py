@@ -817,66 +817,57 @@ elif menu == "Kalkulator":
         except Exception as e:
             st.error(str(e))
 
-    # Input n (valensi ekuivalen / jumlah elektron) dijaga agar selalu bilangan bulat > 0.
-    n_eq_raw = st.text_input(
-        "Berat ekuivalen (Be): masukkan nilai n (valensi ekuivalen / jumlah elektron)",
-        value=str(st.session_state.get("n_eq_raw", "1")),
-        help="Contoh: 1, 2, 3. Bilangan bulat > 0. Jika pakai desimal atau koma, akan ditolak.",
+    # BE otomatis tanpa input valensi:
+    # n otomatis = jumlah atom unsur target pada rumus (n = counts[target_for_n])
+    target_for_n = st.text_input(
+        "Unsur target untuk n (ekuivalen) [tanpa valensi]",
+        value=str(st.session_state.get("target_for_n", "S")),
+        help="n = jumlah atom unsur ini dalam rumus. Contoh: CaSO4 → n(S)=1 (Be = Mr/n).",
     )
-    st.session_state["n_eq_raw"] = n_eq_raw
-
-    def _parse_int_positive(value: str):
-        v = str(value).strip()
-        if not v:
-            return None
-        # dukung format Indonesia: 2,0 -> tolak (karena diminta bulat)
-        v = v.replace(",", ".")
-        try:
-            # validasi ketat: harus int murni (tidak boleh 2.0)
-            if "." in v:
-                return None
-            n = int(v)
-        except Exception:
-            return None
-        if n <= 0:
-            return None
-        return n
-
-    n_eq = _parse_int_positive(n_eq_raw)
+    st.session_state["target_for_n"] = target_for_n
 
     if "last_total_mr" in st.session_state and "last_counts" in st.session_state:
-        if n_eq is None:
-            st.warning("Input n tidak valid. Masukkan bilangan bulat > 0 (mis. 1 atau 2).")
+        total_mr = float(st.session_state["last_total_mr"])
+        counts = st.session_state["last_counts"]
+
+        target_for_n_clean = (target_for_n or "").strip()
+        if not target_for_n_clean:
+            st.warning("Unsur target tidak boleh kosong.")
         else:
-            total_mr = float(st.session_state["last_total_mr"])
-            counts = st.session_state["last_counts"]
-
-            be = total_mr / float(n_eq)
-            st.info(
-                f"Berat ekuivalen (Be) = Mr / n = {total_mr:.{decimals}f} / {n_eq} = {be:.{decimals}f} g/ekuiv"
-            )
-
-            details = []
-            for el in sorted(counts.keys(), key=lambda x: (x != "", x)):
-                cnt = counts[el]
-                mr_el = ATOMIC_MASS[el] * cnt
-                details.append(
-                    {
-                        "Unsur": el,
-                        "Jumlah atom": cnt,
-                        "Mr atom (g/mol)": ATOMIC_MASS[el],
-                        "Kontribusi (g/mol)": mr_el,
-                    }
+            n_auto = int(counts.get(target_for_n_clean, 0))
+            if n_auto <= 0:
+                st.warning(
+                    f"Unsur '{target_for_n_clean}' tidak ditemukan di rumus atau jumlahnya 0. "
+                    "Coba ganti unsur target."
+                )
+            else:
+                be = total_mr / float(n_auto)
+                st.info(
+                    f"Berat ekuivalen (Be) = Mr / n = {total_mr:.{decimals}f} / {n_auto} = {be:.{decimals}f} g/ekuiv"
                 )
 
-            df = pd.DataFrame(details)
-            if enable_table:
-                st.dataframe(df, use_container_width=True, hide_index=True)
+                details = []
+                for el in sorted(counts.keys(), key=lambda x: (x != "", x)):
+                    cnt = counts[el]
+                    mr_el = ATOMIC_MASS[el] * cnt
+                    details.append(
+                        {
+                            "Unsur": el,
+                            "Jumlah atom": cnt,
+                            "Mr atom (g/mol)": ATOMIC_MASS[el],
+                            "Kontribusi (g/mol)": mr_el,
+                        }
+                    )
 
-            st.divider()
-            st.caption(
-                "Catatan: Mr dihitung dari massa atom relatif (g/mol) standar. Nilai di dataset dapat berbeda sedikit tergantung sumber."
-            )
+                df = pd.DataFrame(details)
+                if enable_table:
+                    st.dataframe(df, use_container_width=True, hide_index=True)
+
+                st.divider()
+                st.caption(
+                    "Catatan: n otomatis = jumlah atom unsur target pada rumus. Mr dihitung dari massa atom relatif (g/mol) standar. "
+                    "Nilai di dataset dapat berbeda sedikit tergantung sumber."
+                )
 
     st.markdown("---")
     st.markdown(
