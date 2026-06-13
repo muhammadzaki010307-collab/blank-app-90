@@ -375,31 +375,25 @@ st.markdown(
 
     /* Background */
     .stApp{
-      /* Base gradient + Chemical ambience */
+      /* Reduced-visual-noise chemical background (less eye strain) */
       background:
-        /* 0) Soft vignette */
-        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.55), rgba(255,255,255,0) 55%),
-        radial-gradient(900px 650px at 80% 20%, rgba(2,132,199,.10), rgba(2,132,199,0) 60%),
-        radial-gradient(900px 650px at 10% 70%, rgba(109,40,217,.10), rgba(109,40,217,0) 60%),
+        /* Soft ambient color (low contrast) */
+        radial-gradient(900px 650px at 80% 20%, rgba(2,132,199,.06), rgba(2,132,199,0) 65%),
+        radial-gradient(900px 650px at 10% 70%, rgba(109,40,217,.05), rgba(109,40,217,0) 65%),
 
-        /* 1) Tiny atom dots (lebih halus & rapat) */
-        radial-gradient(circle at 10px 10px, rgba(2,132,199,.20) 0 1.2px, rgba(2,132,199,0) 2.5px) 0 0 / 24px 24px,
-        radial-gradient(circle at 18px 6px, rgba(109,40,217,.18) 0 1px, rgba(109,40,217,0) 2.4px) 0 0 / 28px 28px,
+        /* Atom dots (smaller + much lower opacity) */
+        radial-gradient(circle at 12px 12px, rgba(2,132,199,.12) 0 1px, rgba(2,132,199,0) 2px) 0 0 / 30px 30px,
+        radial-gradient(circle at 22px 8px, rgba(109,40,217,.10) 0 0.9px, rgba(109,40,217,0) 2px) 0 0 / 40px 40px,
 
-        /* 2) Micro “molecular mesh” */
-        linear-gradient(rgba(2,132,199,.08) 1px, transparent 1px) 0 0 / 36px 36px,
-        linear-gradient(90deg, rgba(109,40,217,.06) 1px, transparent 1px) 0 0 / 36px 36px,
+        /* Micro mesh (very faint) */
+        linear-gradient(rgba(2,132,199,.04) 1px, transparent 1px) 0 0 / 48px 48px,
+        linear-gradient(90deg, rgba(109,40,217,.03) 1px, transparent 1px) 0 0 / 48px 48px,
 
-        /* 3) Network-ish lines (diagonal, sangat tipis) */
-        linear-gradient(135deg, rgba(2,132,199,.05) 1px, transparent 1px) 0 0 / 52px 52px,
-        linear-gradient(45deg, rgba(109,40,217,.04) 1px, transparent 1px) 0 0 / 52px 52px,
+        /* Slight glow blobs (muted) */
+        radial-gradient(1200px 600px at 15% -10%, rgba(109,40,217,.14), transparent 62%),
+        radial-gradient(900px 480px at 90% 10%, rgba(2,132,199,.10), transparent 62%),
 
-        /* 4) Glow blobs (dipertajam dikit) */
-        radial-gradient(1200px 600px at 20% -10%, rgba(109,40,217,.22), transparent 55%),
-        radial-gradient(900px 480px at 90% 10%, rgba(2,132,199,.18), transparent 55%),
-        radial-gradient(900px 580px at 20% 100%, rgba(22,163,74,.14), transparent 55%),
-
-        /* 5) Fallback base */
+        /* Fallback base */
         linear-gradient(180deg, var(--bg0), var(--bg1));
 
       color: var(--text);
