@@ -375,22 +375,31 @@ st.markdown(
 
     /* Background */
     .stApp{
-      /* Base gradient */
+      /* Base gradient + Chemical ambience */
       background:
-        /* 1) Atom dots (pattern repeat) */
-        radial-gradient(circle at 12px 12px, rgba(2,132,199,.18) 0 2px, rgba(2,132,199,0) 3px) 0 0 / 28px 28px,
-        radial-gradient(circle at 20px 4px, rgba(109,40,217,.15) 0 1.5px, rgba(109,40,217,0) 3px) 0 0 / 36px 36px,
+        /* 0) Soft vignette */
+        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.55), rgba(255,255,255,0) 55%),
+        radial-gradient(900px 650px at 80% 20%, rgba(2,132,199,.10), rgba(2,132,199,0) 60%),
+        radial-gradient(900px 650px at 10% 70%, rgba(109,40,217,.10), rgba(109,40,217,0) 60%),
 
-        /* 2) Mesh/structure lines (tipis) */
-        linear-gradient(rgba(2,132,199,.09) 1px, transparent 1px) 0 0 / 40px 40px,
-        linear-gradient(90deg, rgba(109,40,217,.07) 1px, transparent 1px) 0 0 / 40px 40px,
+        /* 1) Tiny atom dots (lebih halus & rapat) */
+        radial-gradient(circle at 10px 10px, rgba(2,132,199,.20) 0 1.2px, rgba(2,132,199,0) 2.5px) 0 0 / 24px 24px,
+        radial-gradient(circle at 18px 6px, rgba(109,40,217,.18) 0 1px, rgba(109,40,217,0) 2.4px) 0 0 / 28px 28px,
 
-        /* 3) Glow blobs */
-        radial-gradient(1200px 600px at 20% -10%, rgba(109,40,217,.18), transparent 55%),
-        radial-gradient(900px 480px at 90% 10%, rgba(2,132,199,.14), transparent 55%),
-        radial-gradient(900px 580px at 20% 100%, rgba(22,163,74,.10), transparent 55%),
+        /* 2) Micro “molecular mesh” */
+        linear-gradient(rgba(2,132,199,.08) 1px, transparent 1px) 0 0 / 36px 36px,
+        linear-gradient(90deg, rgba(109,40,217,.06) 1px, transparent 1px) 0 0 / 36px 36px,
 
-        /* 4) Fallback base */
+        /* 3) Network-ish lines (diagonal, sangat tipis) */
+        linear-gradient(135deg, rgba(2,132,199,.05) 1px, transparent 1px) 0 0 / 52px 52px,
+        linear-gradient(45deg, rgba(109,40,217,.04) 1px, transparent 1px) 0 0 / 52px 52px,
+
+        /* 4) Glow blobs (dipertajam dikit) */
+        radial-gradient(1200px 600px at 20% -10%, rgba(109,40,217,.22), transparent 55%),
+        radial-gradient(900px 480px at 90% 10%, rgba(2,132,199,.18), transparent 55%),
+        radial-gradient(900px 580px at 20% 100%, rgba(22,163,74,.14), transparent 55%),
+
+        /* 5) Fallback base */
         linear-gradient(180deg, var(--bg0), var(--bg1));
 
       color: var(--text);
