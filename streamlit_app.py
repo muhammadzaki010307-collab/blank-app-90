@@ -848,9 +848,9 @@ elif menu == "Hitung Valensi/Biloks":
             <div style="font-weight:1000; font-size:1.15rem;">🧮 Hitung Valensi / Biloks</div>
             <div class="bb-muted" style="margin-top:6px;">
               Menghitung bilangan oksidasi unsur target dari rumus (sesuai aturan versi opsi 2):
-              <br/>• H = +1 (default)
-              <br/>• O = −2 (default)
-              <br/>• Senyawa hanya boleh berisi unsur: H, O, dan 1 unsur target
+              <br/>• Asumsi: H = +1 (default), O = −2 (default)
+              <br/>• Unsur selain H dan O boleh muncul, tapi Anda wajib isi biloksnya di bagian “Biloks unsur tambahan”
+              <br/>• Hasil: biloks unsur target X (untuk senyawa netral, Σ(n·biloks)=0)
             </div>
         </div>
         """,
@@ -860,7 +860,7 @@ elif menu == "Hitung Valensi/Biloks":
     col1, col2 = st.columns([1, 1], gap="large")
     with col1:
         rumus = st.text_input(
-            "Rumus kimia (contoh: H2SO4, Na2CO3, CO2)",
+            "Rumus kimia (contoh: H2SO4, Na2CO3, KMnO4)",
             value="H2SO4",
             help="Dukung tanda kurung () dan dot-hydrate: CuSO4·5H2O",
         )
@@ -876,7 +876,7 @@ elif menu == "Hitung Valensi/Biloks":
 
         tombol = st.button("🔎 Hitung Biloks", type="primary")
 
-        st.caption("Catatan: Jika rumus mengandung unsur lain selain H, O, dan unsur target, perhitungan akan ditolak (untuk versi ini).")
+        st.caption("Catatan: Unsur selain H dan O bisa ikut muncul. Anda wajib isi biloksnya via input di hasil.")
 
     with col2:
         if tombol:
@@ -892,15 +892,6 @@ elif menu == "Hitung Valensi/Biloks":
                     st.error(f"Unsur target '{target}' tidak ditemukan di rumus '{rumus}'.")
                     st.stop()
 
-                allowed = {"H", "O", target}
-                extra = [el for el in counts.keys() if el not in allowed]
-                if extra:
-                    st.error(
-                        "Rumus mengandung unsur lain selain H, O, dan unsur target. "
-                        f"Unsur tambahan: {', '.join(extra)}. Untuk versi ini, tidak didukung."
-                    )
-                    st.stop()
-
                 nH = counts.get("H", 0)
                 nO = counts.get("O", 0)
                 nX = counts.get(target, 0)
@@ -909,12 +900,29 @@ elif menu == "Hitung Valensi/Biloks":
                     st.error("Jumlah atom unsur target bernilai 0 (tidak valid).")
                     st.stop()
 
-                # Untuk senyawa netral: jumlah biloks×jumlah atom = 0
-                # nH*H + nO*O + nX*X = 0  => X = -(nH*H + nO*O)/nX
+                extra = sorted([el for el in counts.keys() if el not in {"H", "O", target}])
+
+                # Input biloks untuk unsur ekstra (selain H,O,target)
+                biloks_extra = {}
+                if extra:
+                    st.markdown("#### Biloks unsur tambahan (selain H, O, dan target)")
+                    for el in extra:
+                        biloks_extra[el] = st.number_input(
+                            f"Biloks {el}",
+                            value=0.0,
+                            format="%.4g",
+                            step=1.0,
+                            key=f"biloks_{el}",
+                        )
+
+                # Persamaan senyawa netral: Σ(n_i * biloks_i) = 0
+                # nH*H + nO*O + Σ(n_other*biloks_other) + nX*X = 0
                 rhs = -(nH * biloks_h + nO * biloks_o)
+                for el in extra:
+                    rhs -= counts[el] * biloks_extra[el]
+
                 biloks_x = rhs / nX
 
-                # formatting: bila bilangan bulat dekat, tampilkan int
                 rounded = round(biloks_x)
                 if abs(biloks_x - rounded) < 1e-6:
                     biloks_x_out = int(rounded)
@@ -925,24 +933,31 @@ elif menu == "Hitung Valensi/Biloks":
 
                 st.markdown("---")
                 st.markdown("##### 🧮 Detail Perhitungan")
+                # susun ringkasan Σ
+                terms = []
+                terms.append((f"H", nH, biloks_h))
+                terms.append((f"O", nO, biloks_o))
+                for el in extra:
+                    terms.append((el, counts[el], biloks_extra[el]))
+                terms_sum = sum(cnt * ox for _name, cnt, ox in terms)
+
+                # Σ tanpa target (harus bernilai -nX*X)
                 st.markdown(
                     f"""
                     <div style="padding:14px 14px; border-radius:14px; border:1px solid rgba(17,24,39,.10); background: rgba(17,24,39,.03);">
-                    <div style="font-weight:900; margin-bottom:8px;">Ringkasan</div>
-                    <div style="font-size:.95rem; line-height:1.65;">
-                      • H: {nH} atom × {biloks_h} = {nH*biloks_h}<br/>
-                      • O: {nO} atom × {biloks_o} = {nO*biloks_o}<br/>
-                      • {target}: {nX} atom × X<br/>
-                      • Syarat: Σ (biloks × jumlah atom) = 0<br/>
-                      • Persamaan: {nH}({biloks_h}) + {nO}({biloks_o}) + {nX}(X) = 0<br/>
-                      • Hasil: X = {biloks_x}
-                    </div>
+                      <div style="font-weight:900; margin-bottom:8px;">Ringkasan</div>
+                      <div style="font-size:.95rem; line-height:1.65;">
+                        • Σ(non-target) = {terms_sum}<br/>
+                        • {target}: {nX} atom × X<br/>
+                        • Syarat: Σ (biloks × jumlah atom) = 0<br/>
+                        • Persamaan: (Σ(non-target)) + {nX}(X) = 0<br/>
+                        • Hasil: X = {biloks_x}
+                      </div>
                     </div>
                     """,
                     unsafe_allow_html=True,
                 )
 
-                # tampilkan komposisi atom yang dipakai
                 details = []
                 for el in sorted(counts.keys()):
                     details.append({"Unsur": el, "Jumlah atom": counts[el]})
