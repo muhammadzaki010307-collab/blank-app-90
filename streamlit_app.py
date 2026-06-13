@@ -400,11 +400,35 @@ st.markdown(
       background-attachment: fixed;
     }
 
-    /* Streamlit widgets */
+    /* Streamlit widgets (Sidebar merah) */
     div[data-testid="stSidebar"]{
-      background: linear-gradient(160deg, rgba(239,68,68,.22), rgba(254,202,202,.18)) !important;
+      background: linear-gradient(160deg, rgba(239,68,68,.22), rgba(254,202,202,.16)) !important;
       backdrop-filter: blur(10px);
-      border-right: 1px solid rgba(239,68,68,.25);
+      border-right: 1px solid rgba(239,68,68,.30);
+    }
+
+    /* Radio/menu items di sidebar */
+    div[data-testid="stSidebar"] .stRadio > label,
+    div[data-testid="stSidebar"] .stRadio label{
+      color: rgba(255,255,255,.92) !important;
+    }
+
+    /* Hover item menu */
+    div[data-testid="stSidebar"] .stRadio label:hover{
+      background: rgba(239,68,68,.10) !important;
+      border-radius: 10px;
+    }
+
+    /* Aktif/selected */
+    div[data-testid="stSidebar"] .stRadio input:checked ~ div,
+    div[data-testid="stSidebar"] .stRadio input:checked + div,
+    div[data-testid="stSidebar"] .stRadio input:checked ~ label{
+      color: #ffffff !important;
+    }
+
+    /* Dot/border radio */
+    div[data-testid="stSidebar"] input[type="radio"]{
+      accent-color: #ef4444 !important;
     }
 
     /* Card helpers */
