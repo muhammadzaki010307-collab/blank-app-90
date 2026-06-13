@@ -916,6 +916,31 @@ elif menu == "Hitung Valensi/Biloks":
         biloks_h = st.number_input("Biloks H", value=1.0, format="%.4g", step=1.0)
         biloks_o = st.number_input("Biloks O", value=-2.0, format="%.4g", step=1.0)
 
+        st.markdown("#### n (ekuivalen) untuk menghitung Be")
+        n_eq_raw = st.text_input(
+            "Masukkan n (bilangan bulat > 0)",
+            value=str(st.session_state.get("n_eq_valensi_raw", "1")),
+            help="Be dipakai rumus: Be = Mr / n (seperti di menu Kalkulator).",
+        )
+        st.session_state["n_eq_valensi_raw"] = n_eq_raw
+
+        def _parse_int_positive(value: str):
+            v = str(value).strip()
+            if not v:
+                return None
+            v = v.replace(",", ".")
+            try:
+                if "." in v:
+                    return None
+                n = int(v)
+            except Exception:
+                return None
+            if n <= 0:
+                return None
+            return n
+
+        n_eq = _parse_int_positive(n_eq_raw)
+
         tombol = st.button("🔎 Hitung Biloks", type="primary")
 
         st.caption("Catatan: Unsur selain H dan O bisa ikut muncul. Anda wajib isi biloksnya via input di hasil.")
@@ -923,6 +948,10 @@ elif menu == "Hitung Valensi/Biloks":
     with col2:
         if tombol:
             try:
+                if n_eq is None:
+                    st.warning("Input n tidak valid. Masukkan bilangan bulat > 0 (mis. 1 atau 2).")
+                    st.stop()
+
                 counts = parse_formula(rumus)
 
                 target = target.strip()
@@ -972,6 +1001,11 @@ elif menu == "Hitung Valensi/Biloks":
                     biloks_x_out = biloks_x
 
                 st.success(f"Biloks unsur {target} pada {rumus} = {biloks_x_out}")
+
+                # ===== Otomatis hitung Be =====
+                total_mr = calculate_molar_mass(counts)
+                be = total_mr / float(n_eq)
+                st.info(f"Be = Mr / n = {total_mr:.6g} / {n_eq} = {be:.6g} g/ekuiv")
 
                 st.markdown("---")
                 st.markdown("##### 🧮 Detail Perhitungan")
