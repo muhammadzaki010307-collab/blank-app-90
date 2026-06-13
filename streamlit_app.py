@@ -843,7 +843,9 @@ elif menu == "Kalkulator":
             else:
                 be = total_mr / float(n_auto)
                 st.info(
-                    f"Berat ekuivalen (Be) = Mr / n = {total_mr:.{decimals}f} / {n_auto} = {be:.{decimals}f} g/ekuiv"
+                    f"Stoikiometri (untuk BE)\n"
+                    f"- n otomatis = jumlah atom unsur target '{target_for_n_clean}' dalam rumus = {n_auto}\n"
+                    f"- Be = Mr / n = {total_mr:.{decimals}f} / {n_auto} = {be:.{decimals}f} g/ekuiv"
                 )
 
                 details = []
