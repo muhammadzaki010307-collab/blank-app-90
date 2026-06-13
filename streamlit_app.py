@@ -402,9 +402,9 @@ st.markdown(
 
     /* Streamlit widgets */
     div[data-testid="stSidebar"]{
-      background: rgba(255,255,255,.80) !important;
+      background: linear-gradient(160deg, rgba(239,68,68,.22), rgba(254,202,202,.18)) !important;
       backdrop-filter: blur(10px);
-      border-right: 1px solid rgba(17,24,39,.10);
+      border-right: 1px solid rgba(239,68,68,.25);
     }
 
     /* Card helpers */
