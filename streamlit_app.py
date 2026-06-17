@@ -747,6 +747,26 @@ if menu == "Beranda":
     st.markdown("---")
     st.caption("Tip: gunakan menu di sidebar untuk berpindah halaman.")
 
+    # Author (dipindah ke atas, tepat di bawah judul program)
+    st.markdown(
+        """
+        <div style="margin-top:10px; text-align:center;">
+            <div style="display:inline-block; padding:10px 14px; border-radius:14px; border:1px solid rgba(2,132,199,.18); background:rgba(2,132,199,.06);">
+                <div style="color:#0f3a5a; font-size:1.08rem; font-weight:900; letter-spacing:.02em;">
+                    KELOMPOK 1 LPK 1D
+                    <span style="display:block; margin-top:2px; font-weight:900;">✨ Author</span>
+                </div>
+                <div style="color:#4a7a90; font-size:1.02rem; margin-top:4px; line-height:1.35;">
+                    1. Assalwa Gusnia Kurniasih (2560584) &nbsp; 2. Muhammad Zaki (2560690) &nbsp; 3. Rajendra Wirawisesa (2560745)
+                    <br/>
+                    4. Sri Yunengsih (2560789) &nbsp; 5. Zizi Tsauri Isfahani (2560811)
+                </div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     # Petunjuk cara pakai (ditambahkan di Beranda)
     st.markdown(
         """
@@ -778,24 +798,9 @@ if menu == "Beranda":
         unsafe_allow_html=True,
     )
 
-    st.markdown(
-        """
-        <div style="text-align:center; margin-top:1.2rem;">
-            <div style="display:inline-block; padding:10px 14px; border-radius:14px; border:1px solid rgba(2,132,199,.18); background:rgba(2,132,199,.06);">
-                <div style="color:#0f3a5a; font-size:1.08rem; font-weight:900; letter-spacing:.02em;">
-                    KELOMPOK 1 LPK 1D
-                    <span style="display:block; margin-top:2px; font-weight:900;">✨ Author</span>
-                </div>
-                <div style="color:#4a7a90; font-size:1.05rem; margin-top:4px; line-height:1.35;">
-                    1. Assalwa Gusnia Kurniasih (2560584) &nbsp; 2. Muhammad Zaki (2560690) &nbsp; 3. Rajendra Wirawisesa (2560745)
-                    <br/>
-                    4. Sri Yunengsih (2560789) &nbsp; 5. Zizi Tsauri Isfahani (2560811)
-                </div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    # (Author dipindah ke atas—blok ini dikosongkan)
+    
+    
 
 elif menu == "Kalkulator":
     st.markdown(
