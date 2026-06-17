@@ -746,6 +746,38 @@ if menu == "Beranda":
     )
     st.markdown("---")
     st.caption("Tip: gunakan menu di sidebar untuk berpindah halaman.")
+
+    # Petunjuk cara pakai (ditambahkan di Beranda)
+    st.markdown(
+        """
+        <div class="bb-card" style="margin-top:12px;">
+            <div style="font-weight:1000; font-size:1.15rem;">📌 Cara Pemakaian Website</div>
+            <div class="bb-muted" style="margin-top:6px; line-height:1.7;">
+                <ol style="margin: 0; padding-left: 18px;">
+                    <li><b>Pilih menu</b> di sidebar: <b>Kalkulator</b> / <b>Hitung Valensi/Biloks</b> / <b>Tabel Periodik</b>.</li>
+                    <li>
+                        <b>Kalkulator</b>:
+                        <br/>• Ketik <b>rumus</b> (contoh: <i>H2O</i>, <i>Ca(OH)2</i>, <i>CuSO4·5H2O</i>)
+                        <br/>• Klik <b>Hitung</b> → akan muncul <b>Mr</b>
+                        <br/>• <b>Be</b> dihitung otomatis memakai <i>n otomatis</i> (jumlah atom unsur target pada rumus).
+                    </li>
+                    <li>
+                        <b>Hitung Valensi/Biloks</b>:
+                        <br/>• Isi <b>rumus</b> dan <b>unsur target</b>
+                        <br/>• Klik <b>Hitung Biloks</b> → program menampilkan biloks + <b>Be otomatis</b>.
+                    </li>
+                    <li>
+                        <b>Tabel Periodik</b>:
+                        <br/>• Pilih unsur → tampil detail unsur (massa atom, periode, grup, dll.)
+                        <br/>• Bisa klik <b>Masukkan simbol ke kalkulator (hint)</b> untuk mengisi rumus/unsur dengan cepat.
+                    </li>
+                </ol>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     st.markdown(
         """
         <div style="text-align:center; color:#4a7a90; font-size:.9rem; margin-top:1.2rem;">
