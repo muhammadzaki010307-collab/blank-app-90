@@ -552,26 +552,29 @@ if menu == "Beranda":
         <div class='bb-card' style='margin-top:12px; padding:16px 16px;'>
             <div style='font-weight:1000; font-size:1.15rem;'>📌 Teori singkat: Pengertian valensi pada perhitungan Be</div>
             <div style='margin-top:6px; color: var(--muted); line-height:1.7;'>
-                <b>Valensi</b> (sering juga disebut <i>bilangan oksidasi/valensi kimia</i> di materi sekolah)
-                adalah <b>kemampuan suatu unsur untuk berikatan</b>—secara praktis, ia menggambarkan
-                <b>berapa elektron yang “terlibat”</b> atau <b>berapa satuan muatan</b> yang dibawa unsur saat membentuk senyawa/berreaksi.
-                
+                <b>Valensi</b> adalah kemampuan suatu unsur untuk berikatan.
+                Dalam konteks sekolah, valensi sering dikaitkan dengan <i>bilangan oksidasi</i> (berapa elektron/satuan muatan
+                yang ikut saat membentuk senyawa).
+
                 <br/><br/>
-                Pada kalkulator ini, kita memakai konsep <b>n</b> pada rumus bobot ekuivalen:
+                Pada kalkulator ini, kita pakai konsep <b>n</b> pada rumus bobot ekuivalen:
                 <br/>
                 <b>Be = Mr / n</b>
+
                 <br/><br/>
-                <b>n</b> adalah <b>jumlah ekuivalen</b> yang ikut dalam perhitungan.
+                <b>n</b> menyatakan <b>jumlah ekuivalen</b> yang terlibat.
                 Untuk menyederhanakan, program ini menentukan <b>n dari jumlah atom unsur target pada rumus</b>.
-                
+
                 <br/><br/>
                 <b>Contoh cepat:</b>
                 <ul style='margin: 8px 0 0; padding-left: 18px;'>
                     <li><b>H₂SO₄</b> (unsur target <b>S</b>): jumlah atom S = 1 ⇒ n = 1 ⇒ Be = Mr / 1</li>
-                    <li><b>Ca(OH)₂</b> (jangan pakai unit <b>OH</b> karena tidak diparse sebagai “unsur target”). Pilih unsur pembentuknya, mis. <b>O</b> atau <b>H</b>.</li>
+                    <li><b>Ca(OH)₂</b>: jangan jadikan <b>OH</b> sebagai “unsur target” (unit ini tidak diparse).
+                        Pilih unsur pembentuknya, mis. <b>O</b> atau <b>H</b>.</li>
                 </ul>
 
-                <div style='margin-top:10px; color: rgba(15,23,42,.72);'>Catatan: nilai <b>n</b> bisa berbeda pada konteks reaksi (mis. aturan valensi/oksidasi), tetapi kalkulator ini memakai pendekatan “n = jumlah atom unsur target”.</div>
+                <div style='margin-top:10px; color: rgba(15,23,42,.72);'>Catatan: nilai <b>n</b> bisa berbeda tergantung konteks reaksi.
+                    Namun kalkulator ini memakai pendekatan <b>n = jumlah atom unsur target</b>.</div>
             </div>
         </div>
         """,
