@@ -545,6 +545,33 @@ if menu == "Beranda":
     st.write(
         "Aplikasi ini membantu menghitung **Mr (bobot molekul)** dari rumus kimia, serta menyediakan **tabel periodik** dari dataset massa atom yang ada."
     )
+
+    # Tambahan teori valensi (n) untuk perhitungan Be
+    st.markdown(
+        """
+        <div class='bb-card' style='margin-top:12px; padding:16px 16px;'>
+            <div style='font-weight:1000; font-size:1.15rem;'>📌 Teori singkat: Valensi / n pada perhitungan Be</div>
+            <div style='margin-top:6px; color: var(--muted); line-height:1.7;'>
+                <b>Be (bobot ekuivalen)</b> dihitung dengan rumus:<br/>
+                <b>Be = Mr / n</b>
+                <br/><br/>
+                Di sini, <b>n</b> (sering disebut <i>valensi</i> atau <i>jumlah ekuivalen</i>) adalah <b>jumlah ekuivalen</b>
+                yang berperan dalam reaksi—secara sederhana di program ini, <b>n diambil dari jumlah atom unsur target pada rumus</b>.
+                
+                <br/><br/>
+                <b>Contoh cepat:</b>
+                <ul style='margin: 8px 0 0; padding-left: 18px;'>
+                    <li><b>H₂SO₄</b> (unsur target <b>S</b>): jumlah atom S = 1 ⇒ n = 1 ⇒ Be = Mr / 1</li>
+                    <li><b>Ca(OH)₂</b> (unsur target <b>OH</b> tidak didukung sebagai unit). Pilih unsur pembentuknya (mis. <b>O</b> atau <b>H</b>)</li>
+                </ul>
+
+                <div style='margin-top:10px; color: rgba(15,23,42,.72);'>Catatan: Nilai n bisa berbeda tergantung konteks reaksi.</div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     st.markdown("---")
 
     st.markdown(
