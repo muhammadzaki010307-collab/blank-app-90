@@ -783,7 +783,8 @@ if menu == "Beranda":
         <div style="text-align:center; margin-top:1.2rem;">
             <div style="display:inline-block; padding:10px 14px; border-radius:14px; border:1px solid rgba(2,132,199,.18); background:rgba(2,132,199,.06);">
                 <div style="color:#0f3a5a; font-size:1.08rem; font-weight:900; letter-spacing:.02em;">
-                    ✨ Author
+                    KELOMPOK 1 LPK 1D
+                    <span style="display:block; margin-top:2px; font-weight:900;">✨ Author</span>
                 </div>
                 <div style="color:#4a7a90; font-size:1.05rem; margin-top:4px; line-height:1.35;">
                     1. Assalwa Gusnia Kurniasih (2560584) &nbsp; 2. Muhammad Zaki (2560690) &nbsp; 3. Rajendra Wirawisesa (2560745)
