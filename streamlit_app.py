@@ -780,7 +780,7 @@ if menu == "Beranda":
 
     st.markdown(
         """
-        <div style="text-align:center; color:#4a7a90; font-size:.9rem; margin-top:1.2rem;">
+        <div style="text-align:center; color:#4a7a90; font-size:1.05rem; margin-top:1.2rem;">
             <b>Author:</b> 1. Assalwa Gusnia Kurniasih (2560584) 2. Muhammad Zaki (2560690) 3. Rajendra Wirawisesa (2560745) 4. Sri Yunengsih (2560789)  5. Zizi Tsauri Isfahani (2560811)
         </div>
         """,
