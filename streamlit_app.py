@@ -552,29 +552,20 @@ if menu == "Beranda":
         <div class='bb-card' style='margin-top:12px; padding:16px 16px;'>
             <div style='font-weight:1000; font-size:1.15rem;'>📌 Teori singkat: Pengertian valensi pada perhitungan Be</div>
             <div style='margin-top:6px; color: var(--muted); line-height:1.7;'>
-                <b>Valensi</b> adalah kemampuan suatu unsur untuk berikatan.
-                Dalam konteks sekolah, valensi sering dikaitkan dengan <i>bilangan oksidasi</i> (berapa elektron/satuan muatan
-                yang ikut saat membentuk senyawa).
+                <b>Valensi</b> adalah kemampuan suatu unsur untuk berikatan (sering disetarakan dengan
+                <i>bilangan oksidasi</i> di materi sekolah).
 
                 <br/><br/>
-                Pada kalkulator ini, kita pakai konsep <b>n</b> pada rumus bobot ekuivalen:
+                Pada perhitungan <b>Be</b> di program ini, dipakai rumus:
                 <br/>
                 <b>Be = Mr / n</b>
 
-                <br/><br/>
-                <b>n</b> menyatakan <b>jumlah ekuivalen</b> yang terlibat.
-                Untuk menyederhanakan, program ini menentukan <b>n dari jumlah atom unsur target pada rumus</b>.
+                <br/>
+                dengan <b>n</b> = <b>jumlah ekuivalen</b>. Untuk menyederhanakan, kalkulator mengambil
+                <b>n dari jumlah atom unsur target pada rumus</b>.
 
                 <br/><br/>
-                <b>Contoh cepat:</b>
-                <ul style='margin: 8px 0 0; padding-left: 18px;'>
-                    <li><b>H₂SO₄</b> (unsur target <b>S</b>): jumlah atom S = 1 ⇒ n = 1 ⇒ Be = Mr / 1</li>
-                    <li><b>Ca(OH)₂</b>: jangan jadikan <b>OH</b> sebagai “unsur target” (unit ini tidak diparse).
-                        Pilih unsur pembentuknya, mis. <b>O</b> atau <b>H</b>.</li>
-                </ul>
-
-                <div style='margin-top:10px; color: rgba(15,23,42,.72);'>Catatan: nilai <b>n</b> bisa berbeda tergantung konteks reaksi.
-                    Namun kalkulator ini memakai pendekatan <b>n = jumlah atom unsur target</b>.</div>
+                <b>Catatan:</b> n bisa berbeda tergantung konteks, namun pendekatan program = n = jumlah atom unsur target.
             </div>
         </div>
         """,
