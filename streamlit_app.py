@@ -546,31 +546,7 @@ if menu == "Beranda":
         "Aplikasi ini membantu menghitung **Mr (bobot molekul)** dari rumus kimia, serta menyediakan **tabel periodik** dari dataset massa atom yang ada."
     )
 
-    # Tambahan teori valensi (n) untuk perhitungan Be
-    st.markdown(
-        """
-        <div class='bb-card' style='margin-top:12px; padding:16px 16px;'>
-            <div style='font-weight:1000; font-size:1.15rem;'>📌 Teori singkat: Pengertian valensi pada perhitungan Be</div>
-            <div style='margin-top:6px; color: var(--muted); line-height:1.7;'>
-                <b>Valensi</b> adalah kemampuan suatu unsur untuk berikatan (sering disetarakan dengan
-                <i>bilangan oksidasi</i> di materi sekolah).
 
-                <br/><br/>
-                Pada perhitungan <b>Be</b> di program ini, dipakai rumus:
-                <br/>
-                <b>Be = Mr / n</b>
-
-                <br/>
-                dengan <b>n</b> = <b>jumlah ekuivalen</b>. Untuk menyederhanakan, kalkulator mengambil
-                <b>n dari jumlah atom unsur target pada rumus</b>.
-
-                <br/><br/>
-                <b>Catatan:</b> n bisa berbeda tergantung konteks, namun pendekatan program = n = jumlah atom unsur target.
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
 
     st.markdown("---")
 
