@@ -536,7 +536,7 @@ st.markdown(
 # Sidebar menu (Beranda / Kalkulator / Tabel Periodik)
 menu = st.sidebar.radio(
     "Menu",
-    options=["Beranda", "Kalkulator", "Hitung Valensi/Biloks", "Tabel Periodik"],
+    options=["Beranda", "Tabel Periodik", "Kalkulator", "Hitung Valensi/Biloks"],
     index=0,
 )
 
