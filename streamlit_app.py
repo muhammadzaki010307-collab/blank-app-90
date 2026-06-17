@@ -375,18 +375,60 @@ st.markdown(
 
     /* Background */
     .stApp{
-      background: radial-gradient(1200px 600px at 20% -10%, rgba(109,40,217,.18), transparent 55%),
-                  radial-gradient(900px 480px at 90% 10%, rgba(2,132,199,.14), transparent 55%),
-                  radial-gradient(900px 580px at 20% 100%, rgba(22,163,74,.10), transparent 55%),
-                  linear-gradient(180deg, var(--bg0), var(--bg1));
+      /* Reduced-visual-noise chemical background (less eye strain) */
+      background:
+        /* Soft ambient color (low contrast) */
+        radial-gradient(900px 650px at 80% 20%, rgba(2,132,199,.06), rgba(2,132,199,0) 65%),
+        radial-gradient(900px 650px at 10% 70%, rgba(109,40,217,.05), rgba(109,40,217,0) 65%),
+
+        /* Atom dots (smaller + much lower opacity) */
+        radial-gradient(circle at 12px 12px, rgba(2,132,199,.12) 0 1px, rgba(2,132,199,0) 2px) 0 0 / 30px 30px,
+        radial-gradient(circle at 22px 8px, rgba(109,40,217,.10) 0 0.9px, rgba(109,40,217,0) 2px) 0 0 / 40px 40px,
+
+        /* Micro mesh (very faint) */
+        linear-gradient(rgba(2,132,199,.04) 1px, transparent 1px) 0 0 / 48px 48px,
+        linear-gradient(90deg, rgba(109,40,217,.03) 1px, transparent 1px) 0 0 / 48px 48px,
+
+        /* Slight glow blobs (muted) */
+        radial-gradient(1200px 600px at 15% -10%, rgba(109,40,217,.14), transparent 62%),
+        radial-gradient(900px 480px at 90% 10%, rgba(2,132,199,.10), transparent 62%),
+
+        /* Fallback base */
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+
       color: var(--text);
+      background-attachment: fixed;
     }
 
-    /* Streamlit widgets */
+    /* Streamlit widgets (Sidebar merah) */
     div[data-testid="stSidebar"]{
-      background: rgba(255,255,255,.80) !important;
+      background: linear-gradient(160deg, rgba(239,68,68,.22), rgba(254,202,202,.16)) !important;
       backdrop-filter: blur(10px);
-      border-right: 1px solid rgba(17,24,39,.10);
+      border-right: 1px solid rgba(239,68,68,.30);
+    }
+
+    /* Radio/menu items di sidebar */
+    div[data-testid="stSidebar"] .stRadio > label,
+    div[data-testid="stSidebar"] .stRadio label{
+      color: rgba(255,255,255,.92) !important;
+    }
+
+    /* Hover item menu */
+    div[data-testid="stSidebar"] .stRadio label:hover{
+      background: rgba(239,68,68,.10) !important;
+      border-radius: 10px;
+    }
+
+    /* Aktif/selected */
+    div[data-testid="stSidebar"] .stRadio input:checked ~ div,
+    div[data-testid="stSidebar"] .stRadio input:checked + div,
+    div[data-testid="stSidebar"] .stRadio input:checked ~ label{
+      color: #ffffff !important;
+    }
+
+    /* Dot/border radio */
+    div[data-testid="stSidebar"] input[type="radio"]{
+      accent-color: #ef4444 !important;
     }
 
     /* Card helpers */
@@ -494,7 +536,7 @@ st.markdown(
 # Sidebar menu (Beranda / Kalkulator / Tabel Periodik)
 menu = st.sidebar.radio(
     "Menu",
-    options=["Beranda", "Kalkulator", "Tabel Periodik"],
+    options=["Beranda", "Tabel Periodik", "Kalkulator", "Hitung Valensi/Biloks"],
     index=0,
 )
 
@@ -503,6 +545,33 @@ if menu == "Beranda":
     st.write(
         "Aplikasi ini membantu menghitung **Mr (bobot molekul)** dari rumus kimia, serta menyediakan **tabel periodik** dari dataset massa atom yang ada."
     )
+
+    # Tambahan teori valensi (n) untuk perhitungan Be
+    st.markdown(
+        """
+        <div class='bb-card' style='margin-top:12px; padding:16px 16px;'>
+            <div style='font-weight:1000; font-size:1.15rem;'>📌 Teori singkat: Valensi / n pada perhitungan Be</div>
+            <div style='margin-top:6px; color: var(--muted); line-height:1.7;'>
+                <b>Be (bobot ekuivalen)</b> dihitung dengan rumus:<br/>
+                <b>Be = Mr / n</b>
+                <br/><br/>
+                Di sini, <b>n</b> (sering disebut <i>valensi</i> atau <i>jumlah ekuivalen</i>) adalah <b>jumlah ekuivalen</b>
+                yang berperan dalam reaksi—secara sederhana di program ini, <b>n diambil dari jumlah atom unsur target pada rumus</b>.
+                
+                <br/><br/>
+                <b>Contoh cepat:</b>
+                <ul style='margin: 8px 0 0; padding-left: 18px;'>
+                    <li><b>H₂SO₄</b> (unsur target <b>S</b>): jumlah atom S = 1 ⇒ n = 1 ⇒ Be = Mr / 1</li>
+                    <li><b>Ca(OH)₂</b> (unsur target <b>OH</b> tidak didukung sebagai unit). Pilih unsur pembentuknya (mis. <b>O</b> atau <b>H</b>)</li>
+                </ul>
+
+                <div style='margin-top:10px; color: rgba(15,23,42,.72);'>Catatan: Nilai n bisa berbeda tergantung konteks reaksi.</div>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     st.markdown("---")
 
     st.markdown(
@@ -704,14 +773,61 @@ if menu == "Beranda":
     )
     st.markdown("---")
     st.caption("Tip: gunakan menu di sidebar untuk berpindah halaman.")
+
+    # Author (dipindah ke atas, tepat di bawah judul program)
     st.markdown(
         """
-        <div style="text-align:center; color:#4a7a90; font-size:.9rem; margin-top:1.2rem;">
-            <b>Author:</b> 1. Assalwa Gusnia Kurniasih (2560584) 2. Muhammad Zaki (2560690) 3. Rajendra Wirawisesa (2560745) 4. Sri Yunengsih (2560789)  5. Zizi Tsauri Isfahani (2560811)
+        <div style="margin-top:10px; text-align:center;">
+            <div style="display:inline-block; padding:10px 14px; border-radius:14px; border:1px solid rgba(2,132,199,.18); background:rgba(2,132,199,.06);">
+                <div style="color:#0f3a5a; font-size:1.08rem; font-weight:900; letter-spacing:.02em;">
+                    KELOMPOK 1 LPK 1D
+                    <span style="display:block; margin-top:2px; font-weight:900;">✨ Author</span>
+                </div>
+                <div style="color:#4a7a90; font-size:1.02rem; margin-top:4px; line-height:1.35;">
+                    1. Assalwa Gusnia Kurniasih (2560584) &nbsp; 2. Muhammad Zaki (2560690) &nbsp; 3. Rajendra Wirawisesa (2560745)
+                    <br/>
+                    4. Sri Yunengsih (2560789) &nbsp; 5. Zizi Tsauri Isfahani (2560811)
+                </div>
+            </div>
         </div>
         """,
         unsafe_allow_html=True,
     )
+
+    # Petunjuk cara pakai (ditambahkan di Beranda)
+    st.markdown(
+        """
+        <div class="bb-card" style="margin-top:12px;">
+            <div style="font-weight:1000; font-size:1.15rem;">📌 Cara Pemakaian Website</div>
+            <div class="bb-muted" style="margin-top:6px; line-height:1.7;">
+                <ol style="margin: 0; padding-left: 18px;">
+                    <li><b>Pilih menu</b> di sidebar: <b>Kalkulator</b> / <b>Hitung Valensi/Biloks</b> / <b>Tabel Periodik</b>.</li>
+                    <li>
+                        <b>Kalkulator</b>:
+                        <br/>• Ketik <b>rumus</b> (contoh: <i>H2O</i>, <i>Ca(OH)2</i>, <i>CuSO4·5H2O</i>)
+                        <br/>• Klik <b>Hitung</b> → akan muncul <b>Mr</b>
+                        <br/>• <b>Be</b> dihitung otomatis memakai <i>n otomatis</i> (jumlah atom unsur target pada rumus).
+                    </li>
+                    <li>
+                        <b>Hitung Valensi/Biloks</b>:
+                        <br/>• Isi <b>rumus</b> dan <b>unsur target</b>
+                        <br/>• Klik <b>Hitung Biloks</b> → program menampilkan biloks + <b>Be otomatis</b>.
+                    </li>
+                    <li>
+                        <b>Tabel Periodik</b>:
+                        <br/>• Pilih unsur → tampil detail unsur (massa atom, periode, grup, dll.)
+                        <br/>• Bisa klik <b>Masukkan simbol ke kalkulator (hint)</b> untuk mengisi rumus/unsur dengan cepat.
+                    </li>
+                </ol>
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    # (Author dipindah ke atas—blok ini dikosongkan)
+    
+    
 
 elif menu == "Kalkulator":
     st.markdown(
@@ -775,71 +891,238 @@ elif menu == "Kalkulator":
         except Exception as e:
             st.error(str(e))
 
-    # Input n (valensi ekuivalen / jumlah elektron) dijaga agar selalu bilangan bulat > 0.
-    n_eq_raw = st.text_input(
-        "Berat ekuivalen (Be): masukkan nilai n (valensi ekuivalen / jumlah elektron)",
-        value=str(st.session_state.get("n_eq_raw", "1")),
-        help="Contoh: 1, 2, 3. Bilangan bulat > 0. Jika pakai desimal atau koma, akan ditolak.",
+    # BE otomatis tanpa input valensi:
+    # n otomatis = jumlah atom unsur target pada rumus (n = counts[target_for_n])
+    target_for_n = st.text_input(
+        "Unsur target untuk n (ekuivalen) [tanpa valensi]",
+        value=str(st.session_state.get("target_for_n", "S")),
+        help="n = jumlah atom unsur ini dalam rumus. Contoh: CaSO4 → n(S)=1 (Be = Mr/n).",
     )
-    st.session_state["n_eq_raw"] = n_eq_raw
-
-    def _parse_int_positive(value: str):
-        v = str(value).strip()
-        if not v:
-            return None
-        # dukung format Indonesia: 2,0 -> tolak (karena diminta bulat)
-        v = v.replace(",", ".")
-        try:
-            # validasi ketat: harus int murni (tidak boleh 2.0)
-            if "." in v:
-                return None
-            n = int(v)
-        except Exception:
-            return None
-        if n <= 0:
-            return None
-        return n
-
-    n_eq = _parse_int_positive(n_eq_raw)
+    st.session_state["target_for_n"] = target_for_n
 
     if "last_total_mr" in st.session_state and "last_counts" in st.session_state:
-        if n_eq is None:
-            st.warning("Input n tidak valid. Masukkan bilangan bulat > 0 (mis. 1 atau 2).")
+        total_mr = float(st.session_state["last_total_mr"])
+        counts = st.session_state["last_counts"]
+
+        target_for_n_clean = (target_for_n or "").strip()
+        if not target_for_n_clean:
+            st.warning("Unsur target tidak boleh kosong.")
         else:
-            total_mr = float(st.session_state["last_total_mr"])
-            counts = st.session_state["last_counts"]
-
-            be = total_mr / float(n_eq)
-            st.info(
-                f"Berat ekuivalen (Be) = Mr / n = {total_mr:.{decimals}f} / {n_eq} = {be:.{decimals}f} g/ekuiv"
-            )
-
-            details = []
-            for el in sorted(counts.keys(), key=lambda x: (x != "", x)):
-                cnt = counts[el]
-                mr_el = ATOMIC_MASS[el] * cnt
-                details.append(
-                    {
-                        "Unsur": el,
-                        "Jumlah atom": cnt,
-                        "Mr atom (g/mol)": ATOMIC_MASS[el],
-                        "Kontribusi (g/mol)": mr_el,
-                    }
+            n_auto = int(counts.get(target_for_n_clean, 0))
+            if n_auto <= 0:
+                st.warning(
+                    f"Unsur '{target_for_n_clean}' tidak ditemukan di rumus atau jumlahnya 0. "
+                    "Coba ganti unsur target."
+                )
+            else:
+                be = total_mr / float(n_auto)
+                st.info(
+                    f"Stoikiometri (untuk BE)\n"
+                    f"- n otomatis = jumlah atom unsur target '{target_for_n_clean}' dalam rumus = {n_auto}\n"
+                    f"- Be = Mr / n = {total_mr:.{decimals}f} / {n_auto} = {be:.{decimals}f} g/ekuiv"
                 )
 
-            df = pd.DataFrame(details)
-            if enable_table:
-                st.dataframe(df, use_container_width=True, hide_index=True)
+                details = []
+                for el in sorted(counts.keys(), key=lambda x: (x != "", x)):
+                    cnt = counts[el]
+                    mr_el = ATOMIC_MASS[el] * cnt
+                    details.append(
+                        {
+                            "Unsur": el,
+                            "Jumlah atom": cnt,
+                            "Mr atom (g/mol)": ATOMIC_MASS[el],
+                            "Kontribusi (g/mol)": mr_el,
+                        }
+                    )
 
-            st.divider()
-            st.caption(
-                "Catatan: Mr dihitung dari massa atom relatif (g/mol) standar. Nilai di dataset dapat berbeda sedikit tergantung sumber."
-            )
+                df = pd.DataFrame(details)
+                if enable_table:
+                    st.dataframe(df, use_container_width=True, hide_index=True)
+
+                st.divider()
+                st.caption(
+                    "Catatan: n otomatis = jumlah atom unsur target pada rumus. Mr dihitung dari massa atom relatif (g/mol) standar. "
+                    "Nilai di dataset dapat berbeda sedikit tergantung sumber."
+                )
 
     st.markdown("---")
     st.markdown(
         "**Contoh input**: `H2O`, `CO2`, `CH3COOH`, `NaCl`, `Ca(OH)2`, `CuSO4·5H2O`\n"
     )
+
+elif menu == "Hitung Valensi/Biloks":
+    st.markdown(
+        """
+        <div class="bb-card">
+            <div style="font-weight:1000; font-size:1.15rem;">🧮 Hitung Valensi / Biloks</div>
+            <div class="bb-muted" style="margin-top:6px;">
+              Menghitung bilangan oksidasi unsur target dari rumus (sesuai aturan versi opsi 2):
+              <br/>• Asumsi: H = +1 (default), O = −2 (default)
+              <br/>• Unsur selain H dan O boleh muncul, tapi Anda wajib isi biloksnya di bagian “Biloks unsur tambahan”
+              <br/>• Hasil: biloks unsur target X (untuk senyawa netral, Σ(n·biloks)=0)
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    col1, col2 = st.columns([1, 1], gap="large")
+    with col1:
+        rumus = st.text_input(
+            "Rumus kimia (contoh: H2SO4, Na2CO3, KMnO4)",
+            value="H2SO4",
+            help="Dukung tanda kurung () dan dot-hydrate: CuSO4·5H2O",
+        )
+        target = st.text_input(
+            "Unsur target yang dicari biloksnya",
+            value="S",
+            help="Contoh: S pada H2SO4, C pada Na2CO3, Mn pada KMnO4",
+        )
+
+        st.markdown("#### Asumsi biloks")
+        biloks_h = st.number_input("Biloks H", value=1.0, format="%.4g", step=1.0)
+        biloks_o = st.number_input("Biloks O", value=-2.0, format="%.4g", step=1.0)
+
+        st.markdown("#### n (ekuivalen) untuk menghitung Be")
+        n_eq_raw = st.text_input(
+            "Masukkan n (bilangan bulat > 0)",
+            value=str(st.session_state.get("n_eq_valensi_raw", "1")),
+            help="Be dipakai rumus: Be = Mr / n (seperti di menu Kalkulator).",
+        )
+        st.session_state["n_eq_valensi_raw"] = n_eq_raw
+
+        def _parse_int_positive(value: str):
+            v = str(value).strip()
+            if not v:
+                return None
+            v = v.replace(",", ".")
+            try:
+                if "." in v:
+                    return None
+                n = int(v)
+            except Exception:
+                return None
+            if n <= 0:
+                return None
+            return n
+
+        n_eq = _parse_int_positive(n_eq_raw)
+
+        tombol = st.button("🔎 Hitung Biloks", type="primary")
+
+        st.caption("Catatan: Unsur selain H dan O bisa ikut muncul. Anda wajib isi biloksnya via input di hasil.")
+
+    with col2:
+        if tombol:
+            try:
+                if n_eq is None:
+                    st.warning("Input n tidak valid. Masukkan bilangan bulat > 0 (mis. 1 atau 2).")
+                    st.stop()
+
+                counts = parse_formula(rumus)
+
+                target = target.strip()
+                if not target:
+                    st.error("Unsur target tidak boleh kosong.")
+                    st.stop()
+
+                if target not in counts:
+                    st.error(f"Unsur target '{target}' tidak ditemukan di rumus '{rumus}'.")
+                    st.stop()
+
+                nH = counts.get("H", 0)
+                nO = counts.get("O", 0)
+                nX = counts.get(target, 0)
+
+                if nX == 0:
+                    st.error("Jumlah atom unsur target bernilai 0 (tidak valid).")
+                    st.stop()
+
+                extra = sorted([el for el in counts.keys() if el not in {"H", "O", target}])
+
+                # Input biloks untuk unsur ekstra (selain H,O,target)
+                biloks_extra = {}
+                if extra:
+                    st.markdown("#### Biloks unsur tambahan (selain H, O, dan target)")
+                    for el in extra:
+                        biloks_extra[el] = st.number_input(
+                            f"Biloks {el}",
+                            value=0.0,
+                            format="%.4g",
+                            step=1.0,
+                            key=f"biloks_{el}",
+                        )
+
+                # Persamaan senyawa netral: Σ(n_i * biloks_i) = 0
+                # nH*H + nO*O + Σ(n_other*biloks_other) + nX*X = 0
+                rhs = -(nH * biloks_h + nO * biloks_o)
+                for el in extra:
+                    rhs -= counts[el] * biloks_extra[el]
+
+                biloks_x = rhs / nX
+
+                rounded = round(biloks_x)
+                if abs(biloks_x - rounded) < 1e-6:
+                    biloks_x_out = int(rounded)
+                else:
+                    biloks_x_out = biloks_x
+
+                st.success(f"Biloks unsur {target} pada {rumus} = {biloks_x_out}")
+
+                # ===== Otomatis hitung Be =====
+                total_mr = calculate_molar_mass(counts)
+                be = total_mr / float(n_eq)
+                st.info(f"Be = Mr / n = {total_mr:.6g} / {n_eq} = {be:.6g} g/ekuiv")
+
+                st.markdown("---")
+                st.markdown("##### 🧮 Detail Perhitungan")
+                # susun ringkasan Σ
+                terms = []
+                terms.append((f"H", nH, biloks_h))
+                terms.append((f"O", nO, biloks_o))
+                for el in extra:
+                    terms.append((el, counts[el], biloks_extra[el]))
+                terms_sum = sum(cnt * ox for _name, cnt, ox in terms)
+
+                # Σ tanpa target (harus bernilai -nX*X)
+                st.markdown(
+                    f"""
+                    <div style="padding:14px 14px; border-radius:14px; border:1px solid rgba(17,24,39,.10); background: rgba(17,24,39,.03);">
+                      <div style="font-weight:900; margin-bottom:8px;">Ringkasan</div>
+                      <div style="font-size:.95rem; line-height:1.65;">
+                        • Σ(non-target) = {terms_sum}<br/>
+                        • {target}: {nX} atom × X<br/>
+                        • Syarat: Σ (biloks × jumlah atom) = 0<br/>
+                        • Persamaan: (Σ(non-target)) + {nX}(X) = 0<br/>
+                        • Hasil: X = {biloks_x}
+                      </div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+
+                details = []
+                for el in sorted(counts.keys()):
+                    details.append({"Unsur": el, "Jumlah atom": counts[el]})
+                import pandas as _pd
+                df = _pd.DataFrame(details)
+                st.dataframe(df, use_container_width=True, hide_index=True)
+
+            except Exception as e:
+                st.error(str(e))
+        else:
+            st.markdown(
+                """
+                <div class="bb-card" style="padding:18px 18px;">
+                  <div style="font-weight:1000; margin-bottom:6px;">Cara pakai</div>
+                  <div class="bb-muted" style="line-height:1.6;">
+                    Isi <b>rumus</b> dan <b>unsur target</b>, lalu klik <b>Hitung Biloks</b>.<br/>
+                    Contoh: <b>H2SO4</b> (target <b>S</b>) → S = +6 (asumsi H=+1, O=−2)
+                  </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
 
 elif menu == "Tabel Periodik":
     st.subheader("Tabel Periodik dari dataset massa atom")
